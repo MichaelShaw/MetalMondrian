@@ -21,6 +21,8 @@
 		4CC90B0D1F8744B100E2DBDD /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */; };
 		4CC90B0F1F874BF700E2DBDD /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC90B0E1F874BF700E2DBDD /* GLKit.framework */; };
 		4CC90B111F8750AD00E2DBDD /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B101F8750AD00E2DBDD /* Matrix.swift */; };
+		4CC90B141F8756A200E2DBDD /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B131F8756A200E2DBDD /* Texture.swift */; };
+		4CC90B151F87570200E2DBDD /* mondrian_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC90B121F87562500E2DBDD /* mondrian_square.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipeline.swift; sourceTree = "<group>"; };
 		4CC90B0E1F874BF700E2DBDD /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		4CC90B101F8750AD00E2DBDD /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		4CC90B121F87562500E2DBDD /* mondrian_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mondrian_square.png; sourceTree = "<group>"; };
+		4CC90B131F8756A200E2DBDD /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 		4C7922661F8726E40018F180 /* MetalMondrian */ = {
 			isa = PBXGroup;
 			children = (
+				4CC90B121F87562500E2DBDD /* mondrian_square.png */,
 				4C7922671F8726E40018F180 /* AppDelegate.swift */,
 				4C7922691F8726E40018F180 /* ViewController.swift */,
 				4C7922841F872BEE0018F180 /* Shaders.metal */,
@@ -88,6 +93,7 @@
 				4C7922821F8728C80018F180 /* Constraint.swift */,
 				4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */,
 				4CC90B101F8750AD00E2DBDD /* Matrix.swift */,
+				4CC90B131F8756A200E2DBDD /* Texture.swift */,
 			);
 			path = MetalMondrian;
 			sourceTree = "<group>";
@@ -165,6 +171,7 @@
 				4C7922721F8726E40018F180 /* LaunchScreen.storyboard in Resources */,
 				4C79226F1F8726E40018F180 /* Assets.xcassets in Resources */,
 				4C79226D1F8726E40018F180 /* Main.storyboard in Resources */,
+				4CC90B151F87570200E2DBDD /* mondrian_square.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CC90B111F8750AD00E2DBDD /* Matrix.swift in Sources */,
+				4CC90B141F8756A200E2DBDD /* Texture.swift in Sources */,
 				4C7922831F8728C80018F180 /* Constraint.swift in Sources */,
 				4C79226A1F8726E40018F180 /* ViewController.swift in Sources */,
 				4C7922681F8726E40018F180 /* AppDelegate.swift in Sources */,

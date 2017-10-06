@@ -9,17 +9,6 @@
 import Metal
 import UIKit
 
-let triangleVertices : [Float] = [
-    0.0, 1.0, 0.0,
-    -1.0, -1.0, 0.0,
-    1.0, -1.0, 0.0
-]
-
-let trianglePositions : [PositionedVertex] = [
-    PositionedVertex(x: 0.0, y: 1.0, z: 0.0),
-    PositionedVertex(x: -1.0, y: -1.0, z: 0.0),
-    PositionedVertex(x: 1.0, y: -1.0, z: 0.0)
-]
 
 let coloredTrianglePositions : [ColoredVertex] = [
     ColoredVertex(x: 0.0, y: 1.0, z: 0.0, r: 1.0, g: 0.0, b: 0.0, a: 1.0),
@@ -27,12 +16,20 @@ let coloredTrianglePositions : [ColoredVertex] = [
     ColoredVertex(x: 1.0, y: -1.0, z: 0.0, r: 0.0, g: 0.0, b: 1.0, a: 1.0)
 ]
 
-struct PositionedVertex {
-    var x, y, z: Float
-}
+let fatTriangle : [FatVertex] = [
+    FatVertex(x: 0.0, y: 1.0, z: 0.0, u: 0.0, v: 1.0,r: 1.0,  g: 0.0, b: 0.0, a: 1.0),
+    FatVertex(x: -1.0, y: -1.0, z: 0.0, u: 1.0, v: 0.0, r: 0.0,  g: 1.0, b: 0.0, a: 1.0),
+    FatVertex(x: 1.0, y: -1.0, z: 0.0, u:1.0, v: 1.0, r: 0.0, g: 0.0, b: 1.0, a: 1.0)
+]
 
 struct ColoredVertex {
     var x,y,z: Float     // position data
+    var r,g,b,a: Float   // color data
+}
+
+struct FatVertex {
+    var x,y,z: Float     // position data
+    var u,v: Float
     var r,g,b,a: Float   // color data
 }
 

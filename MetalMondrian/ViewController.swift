@@ -49,9 +49,13 @@ class PrimaryView : UIView {
   var pipeline: MTLRenderPipelineState
   var commandQueue: MTLCommandQueue
   var displayLink: CADisplayLink?
-  
-  var tesselator : Tesselator<ColoredVertex> = Tesselator()
-  var geo: GeometryData<ColoredVertex>?
+//  var texture: MTLTexture
+  var sampler: MTLSamplerState
+    
+  var tesselator : Tesselator<FatVertex> = Tesselator()
+  var geo: GeometryData<FatVertex>?
+  var texture: Texture?
+    
   
   public init(frame:CGRect, device:MTLDevice, metalLayer:CAMetalLayer) {
     self.device = device
@@ -60,15 +64,16 @@ class PrimaryView : UIView {
     
     self.pipeline = createPipeline(device: device)
     self.commandQueue = device.makeCommandQueue()!
-//    print("vertex buffer -> \(vertexBuffer)")
-//    print("pipeline -> \(pipeline)")
-    
-    
+
+    let image = UIImage(named: "mondrian_square.png")!
+    self.texture = makeTexture(image: image.cgImage!, device:device)
+   
+    self.sampler = defaultSampler(device: device)!
     
     super.init(frame:frame)
     
-    for p in coloredTrianglePositions {
-        tesselator.push(p)
+    for v in fatTriangle {
+        tesselator.push(v)
     }
     self.geo = tesselator.createGeometry(device: device)
     
@@ -81,7 +86,27 @@ class PrimaryView : UIView {
   }
   
   required public init?(coder aDecoder: NSCoder) { return nil }
-  
+    
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print("began -> \(touches)")
+    super.touchesBegan(touches, with: event)
+  }
+    
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    print("moved -> \(touches)")
+    super.touchesMoved(touches, with: event)
+  }
+    
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print("ended -> \(touches)")
+    super.touchesEnded(touches, with: event)
+  }
+    
+  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print("cancelled -> \(touches)")
+    super.touchesCancelled(touches, with: event)
+  }
+    
   public override func layoutSubviews() {
     super.layoutSubviews()
     print("layout subviews within my bounds \(self.bounds)")
@@ -96,7 +121,7 @@ class PrimaryView : UIView {
   public func render() {
     guard let geoData = self.geo else { return }
     guard let drawable = metalLayer.nextDrawable() else { return }
-    print("render :D")
+//    print("render :D")
     let renderPassDescriptor = MTLRenderPassDescriptor()
     renderPassDescriptor.colorAttachments[0].texture = drawable.texture
     renderPassDescriptor.colorAttachments[0].loadAction = .clear
@@ -104,17 +129,10 @@ class PrimaryView : UIView {
     renderPassDescriptor.colorAttachments[0].storeAction = .store
     
     let theta = NSDate().timeIntervalSinceReferenceDate.truncatingRemainder(dividingBy: tau)
-    var rotation = getRotationAroundZ(Float(theta))
+    let rotation = getRotationAroundZ(Float(theta))
     
     let uniformBuffer = device.makeBuffer(length: MemoryLayout<matrix_float4x4>.size, options: [])!
-    let bufferPointer = uniformBuffer.contents().storeBytes(of: rotation, as: matrix_float4x4.self)
-        // .storeBytes(of: rotation, as: [Float])
-    
-  
-    
-    
-//    memcpy(bufferPointer, rotation, MemoryLayout<Float>.size * 16)
-    
+    uniformBuffer.contents().storeBytes(of: rotation, as: matrix_float4x4.self)
     
     let commandBuffer = commandQueue.makeCommandBuffer()!
     
@@ -122,6 +140,12 @@ class PrimaryView : UIView {
     renderEncoder.setRenderPipelineState(pipeline)
     renderEncoder.setVertexBuffer(geoData.vertexBuffer, offset: 0, index: 0)
     renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
+    
+    renderEncoder.setFragmentSamplerState(self.sampler, index: 0)
+    if let t = self.texture {
+        renderEncoder.setFragmentTexture(t.texture, index: 0)
+    }
+
     renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: geoData.vertexCount, instanceCount: 1)
     renderEncoder.endEncoding()
     
