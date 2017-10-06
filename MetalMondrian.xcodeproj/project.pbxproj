@@ -18,6 +18,9 @@
 		4C7922811F8727D30018F180 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922801F8727D30018F180 /* Color.swift */; };
 		4C7922831F8728C80018F180 /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922821F8728C80018F180 /* Constraint.swift */; };
 		4C7922851F872BEE0018F180 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922841F872BEE0018F180 /* Shaders.metal */; };
+		4CC90B0D1F8744B100E2DBDD /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */; };
+		4CC90B0F1F874BF700E2DBDD /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC90B0E1F874BF700E2DBDD /* GLKit.framework */; };
+		4CC90B111F8750AD00E2DBDD /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B101F8750AD00E2DBDD /* Matrix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		4C7922801F8727D30018F180 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		4C7922821F8728C80018F180 /* Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
 		4C7922841F872BEE0018F180 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipeline.swift; sourceTree = "<group>"; };
+		4CC90B0E1F874BF700E2DBDD /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		4CC90B101F8750AD00E2DBDD /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CC90B0F1F874BF700E2DBDD /* GLKit.framework in Frameworks */,
 				4C79227D1F8727280018F180 /* MetalKit.framework in Frameworks */,
 				4C79227E1F8727280018F180 /* CoreML.framework in Frameworks */,
 				4C79227F1F8727280018F180 /* Metal.framework in Frameworks */,
@@ -79,6 +86,8 @@
 				4C7922731F8726E40018F180 /* Info.plist */,
 				4C7922801F8727D30018F180 /* Color.swift */,
 				4C7922821F8728C80018F180 /* Constraint.swift */,
+				4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */,
+				4CC90B101F8750AD00E2DBDD /* Matrix.swift */,
 			);
 			path = MetalMondrian;
 			sourceTree = "<group>";
@@ -86,6 +95,7 @@
 		4C7922791F8727270018F180 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CC90B0E1F874BF700E2DBDD /* GLKit.framework */,
 				4C79227B1F8727270018F180 /* CoreML.framework */,
 				4C79227C1F8727280018F180 /* Metal.framework */,
 				4C79227A1F8727270018F180 /* MetalKit.framework */,
@@ -165,9 +175,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CC90B111F8750AD00E2DBDD /* Matrix.swift in Sources */,
 				4C7922831F8728C80018F180 /* Constraint.swift in Sources */,
 				4C79226A1F8726E40018F180 /* ViewController.swift in Sources */,
 				4C7922681F8726E40018F180 /* AppDelegate.swift in Sources */,
+				4CC90B0D1F8744B100E2DBDD /* Pipeline.swift in Sources */,
 				4C7922811F8727D30018F180 /* Color.swift in Sources */,
 				4C7922851F872BEE0018F180 /* Shaders.metal in Sources */,
 			);
