@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C0B59CE1F9052D00030A0C7 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59CD1F9052D00030A0C7 /* CanvasView.swift */; };
+		4C0B59D01F9052DC0030A0C7 /* RenderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59CF1F9052DC0030A0C7 /* RenderContext.swift */; };
+		4C0B59D21F9052F20030A0C7 /* RenderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59D11F9052F20030A0C7 /* RenderState.swift */; };
+		4C0B59D41F9056DD0030A0C7 /* Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59D31F9056DD0030A0C7 /* Bitmap.swift */; };
 		4C7922681F8726E40018F180 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922671F8726E40018F180 /* AppDelegate.swift */; };
 		4C79226A1F8726E40018F180 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922691F8726E40018F180 /* ViewController.swift */; };
 		4C79226D1F8726E40018F180 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C79226B1F8726E40018F180 /* Main.storyboard */; };
@@ -19,13 +23,16 @@
 		4C7922831F8728C80018F180 /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922821F8728C80018F180 /* Constraint.swift */; };
 		4C7922851F872BEE0018F180 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922841F872BEE0018F180 /* Shaders.metal */; };
 		4CC90B0D1F8744B100E2DBDD /* Pipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */; };
-		4CC90B0F1F874BF700E2DBDD /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC90B0E1F874BF700E2DBDD /* GLKit.framework */; };
 		4CC90B111F8750AD00E2DBDD /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B101F8750AD00E2DBDD /* Matrix.swift */; };
 		4CC90B141F8756A200E2DBDD /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC90B131F8756A200E2DBDD /* Texture.swift */; };
 		4CC90B151F87570200E2DBDD /* mondrian_square.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC90B121F87562500E2DBDD /* mondrian_square.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C0B59CD1F9052D00030A0C7 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		4C0B59CF1F9052DC0030A0C7 /* RenderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderContext.swift; sourceTree = "<group>"; };
+		4C0B59D11F9052F20030A0C7 /* RenderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderState.swift; sourceTree = "<group>"; };
+		4C0B59D31F9056DD0030A0C7 /* Bitmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bitmap.swift; sourceTree = "<group>"; };
 		4C7922641F8726E40018F180 /* MetalMondrian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalMondrian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7922671F8726E40018F180 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C7922691F8726E40018F180 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -40,7 +47,6 @@
 		4C7922821F8728C80018F180 /* Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
 		4C7922841F872BEE0018F180 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pipeline.swift; sourceTree = "<group>"; };
-		4CC90B0E1F874BF700E2DBDD /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		4CC90B101F8750AD00E2DBDD /* Matrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		4CC90B121F87562500E2DBDD /* mondrian_square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mondrian_square.png; sourceTree = "<group>"; };
 		4CC90B131F8756A200E2DBDD /* Texture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Texture.swift; sourceTree = "<group>"; };
@@ -51,7 +57,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CC90B0F1F874BF700E2DBDD /* GLKit.framework in Frameworks */,
 				4C79227D1F8727280018F180 /* MetalKit.framework in Frameworks */,
 				4C79227E1F8727280018F180 /* CoreML.framework in Frameworks */,
 				4C79227F1F8727280018F180 /* Metal.framework in Frameworks */,
@@ -61,6 +66,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C0B59CC1F9052C40030A0C7 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				4C0B59CD1F9052D00030A0C7 /* CanvasView.swift */,
+				4C0B59CF1F9052DC0030A0C7 /* RenderContext.swift */,
+				4C0B59D11F9052F20030A0C7 /* RenderState.swift */,
+			);
+			path = Canvas;
+			sourceTree = "<group>";
+		};
 		4C79225B1F8726E40018F180 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +96,7 @@
 		4C7922661F8726E40018F180 /* MetalMondrian */ = {
 			isa = PBXGroup;
 			children = (
+				4C0B59CC1F9052C40030A0C7 /* Canvas */,
 				4CC90B121F87562500E2DBDD /* mondrian_square.png */,
 				4C7922671F8726E40018F180 /* AppDelegate.swift */,
 				4C7922691F8726E40018F180 /* ViewController.swift */,
@@ -94,6 +110,7 @@
 				4CC90B0C1F8744B100E2DBDD /* Pipeline.swift */,
 				4CC90B101F8750AD00E2DBDD /* Matrix.swift */,
 				4CC90B131F8756A200E2DBDD /* Texture.swift */,
+				4C0B59D31F9056DD0030A0C7 /* Bitmap.swift */,
 			);
 			path = MetalMondrian;
 			sourceTree = "<group>";
@@ -101,7 +118,6 @@
 		4C7922791F8727270018F180 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CC90B0E1F874BF700E2DBDD /* GLKit.framework */,
 				4C79227B1F8727270018F180 /* CoreML.framework */,
 				4C79227C1F8727280018F180 /* Metal.framework */,
 				4C79227A1F8727270018F180 /* MetalKit.framework */,
@@ -182,14 +198,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C0B59D21F9052F20030A0C7 /* RenderState.swift in Sources */,
 				4CC90B111F8750AD00E2DBDD /* Matrix.swift in Sources */,
 				4CC90B141F8756A200E2DBDD /* Texture.swift in Sources */,
 				4C7922831F8728C80018F180 /* Constraint.swift in Sources */,
+				4C0B59D41F9056DD0030A0C7 /* Bitmap.swift in Sources */,
 				4C79226A1F8726E40018F180 /* ViewController.swift in Sources */,
 				4C7922681F8726E40018F180 /* AppDelegate.swift in Sources */,
 				4CC90B0D1F8744B100E2DBDD /* Pipeline.swift in Sources */,
 				4C7922811F8727D30018F180 /* Color.swift in Sources */,
+				4C0B59D01F9052DC0030A0C7 /* RenderContext.swift in Sources */,
 				4C7922851F872BEE0018F180 /* Shaders.metal in Sources */,
+				4C0B59CE1F9052D00030A0C7 /* CanvasView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

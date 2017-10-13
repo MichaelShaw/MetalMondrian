@@ -16,8 +16,6 @@ public struct Texture {
 }
 
 func uploadImage(image:CGImage, toTexture texture:MTLTexture) {
-    
-    
     let colorSpace = CGColorSpaceCreateDeviceRGB()
     let width = image.width
     let height = image.height
@@ -30,17 +28,31 @@ func uploadImage(image:CGImage, toTexture texture:MTLTexture) {
     let bounds = CGRect(x: 0, y: 0, width: Int(width), height: Int(height))
     context.clear(bounds)
     context.draw(image, in: bounds)
+
+    let bitmap : Bitmap<RGBAPixel> = Bitmap(width: 720, height: 720)
+  
+    for x in 0..<720 {
+      for y in 0..<720 {
+        let pixel = RGBAPixel(r: UInt8(x % 255), g: UInt8(y % 128), b: 0, a: 255)
+        bitmap.set(x: x, y: y, pixel: pixel)
+        
+      }
+    }
  
     /*
  if flip == false {
  context.translateBy(x: 0, y: CGFloat(self.height))
  context.scaleBy(x: 1.0, y: -1.0)
  }*/
-    
-    
+  
     let region = MTLRegionMake2D(0, 0, width, height)
-    texture.replace(region: region, mipmapLevel: 0, withBytes: context.data!, bytesPerRow: Int(rowBytes))
-    
+  
+    bitmap.storage.withUnsafeBytes { (u8Ptr: UnsafeRawBufferPointer) in
+      let ptr = u8Ptr.baseAddress!
+      
+      texture.replace(region: region, mipmapLevel: 0, withBytes: ptr, bytesPerRow: Int(rowBytes))
+    }
+//  texture.replace(region: region, mipmapLevel: 0, withBytes: context.data!, bytesPerRow: Int(rowBytes))
 }
 
 func makeTexture(image: CGImage, device:MTLDevice) -> Texture {
