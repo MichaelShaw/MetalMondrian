@@ -24,6 +24,15 @@ public func ==(lhs:StylizeVersion, rhs:StylizeVersion) -> Bool {
   return lhs.drawingVersion == rhs.drawingVersion && lhs.style == rhs.style
 }
 
+enum LoadedModel {
+  case candy(FNSCandy)
+  case feathers(FNSFeathers)
+  case laMuse(FNSLaMuse)
+  case mosaic(FNSMosaic)
+  case theScream(FNSTheScream)
+  case udnie(FNSUdnie)
+}
+
 public class CanvasView : UIView {
   var renderState: RenderState
   var renderContext : RenderContext
@@ -33,7 +42,7 @@ public class CanvasView : UIView {
   let metalLayer : CAMetalLayer
   
   let stylizeQueue : DispatchQueue
-  let styleModel = FNSMosaic()
+  var styleModel : LoadedModel? = nil
   var styleStatus : StyleStatus = .idle
   var lastStyle: (StylizeVersion, Bitmap<RGBAPixel>)? = nil
   
@@ -109,36 +118,71 @@ public class CanvasView : UIView {
       if run {
         print("run styleize :D")
         var imgToStyle = self.renderState.drawing
-        let model = self.styleModel
         
         self.styleStatus = .running
         self.stylizeQueue.async {
           if let pb = createPixelBuffer(forBitmap:&imgToStyle) {
-            let out = try! model.prediction(inputImage: pb)
-            
-            if let outBitmap = readBack(buffer:out.outputImage, width: 720, height:720) {
-              DispatchQueue.main.async {
-                print("main queue update version, bitmap, etc")
-                self.lastStyle = (currentVersion, outBitmap)
-                self.styleStatus = .idle
-                // recheck
+            // check correct model loaded
+            switch (currentVersion.style, self.styleModel) {
+            case (.candy, .some(.candy(_))): ()
+            case (.feathers, .some(.feathers(_))): ()
+            case (.laMuse, .some(.laMuse(_))): ()
+            case (.mosaic, .some(.mosaic(_))): ()
+            case (.theScream, .some(.theScream(_))):()
+            case (.udnie, .some(.udnie(_))): ()
+            default:
+              switch currentVersion.style {
+              case .candy: self.styleModel = .some(.candy(FNSCandy()))
+              case .feathers: self.styleModel = .some(.feathers(FNSFeathers()))
+              case .laMuse: self.styleModel = .some(.laMuse(FNSLaMuse()))
+              case .mosaic: self.styleModel = .some(.mosaic(FNSMosaic()))
+              case .theScream: self.styleModel = .some(.theScream(FNSTheScream()))
+              case .udnie: self.styleModel = .some(.udnie(FNSUdnie()))
               }
-            } else {
-              print("cant read output cv to bitmap")
             }
             
+            
+            let prediction : CVPixelBuffer?
+            if let m = self.styleModel {
+              switch m {
+              case .candy(let model):
+                prediction = try! model.prediction(inputImage: pb).outputImage
+              case .feathers(let model):
+                prediction = try! model.prediction(inputImage: pb).outputImage
+              case .laMuse(let model):
+                prediction = try! model.prediction(inputImage: pb).outputImage
+              case .mosaic(let model):
+                prediction = try! model.prediction(inputImage: pb).outputImage
+              case .theScream(let model):
+                prediction = try! model.prediction(inputImage: pb).outputImage
+              case .udnie(let model):
+                prediction = try! model.prediction(inputImage: pb).outputImage
+              }
+            } else {
+              prediction = nil
+            }
+            
+            if let out = prediction {
+              if let outBitmap = readBack(buffer:out, width: 720, height:720) {
+                DispatchQueue.main.async {
+                  print("main queue update version, bitmap, etc")
+                  self.lastStyle = (currentVersion, outBitmap)
+                  self.styleStatus = .idle
+                  // recheck
+                  self.checkStylized()
+                }
+              } else {
+                print("cant read output cv to bitmap")
+              }
+            }
           } else {
             print("couldnt create cv for input bitmap")
           }
-          
         }
       }
-      
-      
-      
     case .running:
       ()
-      // do nothing, already running
+      // do nothing, already running .. we'll recur on completion to check for whether we should update again
     }
   }
   

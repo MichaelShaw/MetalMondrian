@@ -19,6 +19,7 @@
 		4C1EC3A91F906E5200082AEA /* FNSUdnie.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59DA1F905FC30030A0C7 /* FNSUdnie.mlmodel */; };
 		4C1EC3AA1F906E5400082AEA /* FNSTheScream.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59D61F905FC30030A0C7 /* FNSTheScream.mlmodel */; };
 		4C1EC3AC1F9073BE00082AEA /* Stylizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EC3AB1F9073BE00082AEA /* Stylizer.swift */; };
+		4C1EC3AE1F90889600082AEA /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1EC3AD1F90889600082AEA /* BasicButton.swift */; };
 		4C7922681F8726E40018F180 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922671F8726E40018F180 /* AppDelegate.swift */; };
 		4C79226A1F8726E40018F180 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7922691F8726E40018F180 /* ViewController.swift */; };
 		4C79226D1F8726E40018F180 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C79226B1F8726E40018F180 /* Main.storyboard */; };
@@ -49,6 +50,7 @@
 		4C0B59DA1F905FC30030A0C7 /* FNSUdnie.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FNSUdnie.mlmodel; sourceTree = "<group>"; };
 		4C0B59E11F9061910030A0C7 /* CGRectExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRectExtensions.swift; sourceTree = "<group>"; };
 		4C1EC3AB1F9073BE00082AEA /* Stylizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stylizer.swift; sourceTree = "<group>"; };
+		4C1EC3AD1F90889600082AEA /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
 		4C7922641F8726E40018F180 /* MetalMondrian.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalMondrian.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C7922671F8726E40018F180 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4C7922691F8726E40018F180 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				4C0B59D31F9056DD0030A0C7 /* Bitmap.swift */,
 				4C0B59E11F9061910030A0C7 /* CGRectExtensions.swift */,
 				4C1EC3AB1F9073BE00082AEA /* Stylizer.swift */,
+				4C1EC3AD1F90889600082AEA /* BasicButton.swift */,
 			);
 			path = MetalMondrian;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1EC3AE1F90889600082AEA /* BasicButton.swift in Sources */,
 				4C1EC3A51F906E4500082AEA /* FNSFeathers.mlmodel in Sources */,
 				4C0B59D21F9052F20030A0C7 /* RenderState.swift in Sources */,
 				4C1EC3A81F906E5000082AEA /* FNSMosaic.mlmodel in Sources */,

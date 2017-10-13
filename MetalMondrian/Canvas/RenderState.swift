@@ -16,6 +16,21 @@ public enum StyleModel : String {
   case mosaic
   case theScream
   case udnie
+  
+  public static var all : [StyleModel] = [.candy, .feathers, .laMuse, .mosaic, .theScream, .udnie]
+  
+  public var description: String {
+    get {
+      switch self {
+      case .candy: return "Candy"
+      case .feathers: return "Feathers"
+      case .laMuse: return "La Muse"
+      case .mosaic: return "Mosaic"
+      case .theScream: return "The Scream"
+      case .udnie: return "Udnie"
+      }
+    }
+  }
 }
 
 public enum StyleStatus {
@@ -23,11 +38,38 @@ public enum StyleStatus {
   case idle
 }
 
+public enum BlendMode : Int {
+  case drawing
+  case mix
+  case style
+  
+  public var next : BlendMode {
+    get {
+      switch self {
+      case .drawing: return .mix
+      case .mix: return .style
+      case .style: return .drawing
+      }
+    }
+  }
+  
+  public var description: String {
+    get {
+      switch self {
+      case .drawing: return "Drawing"
+      case .mix: return "Mix"
+      case .style: return "Stylized"
+      }
+    }
+  }
+}
+
 public class RenderState {
   var drawing: Bitmap<RGBAPixel>
   var drawingVersion : Int = 0
   var model : StyleModel = .mosaic
   var color : RGBAPixel = RGBAPixel.opaqueBlack
+  var blendMode : BlendMode = .mix
   
   public init(drawing: Bitmap<RGBAPixel>) {
     self.drawing = drawing
