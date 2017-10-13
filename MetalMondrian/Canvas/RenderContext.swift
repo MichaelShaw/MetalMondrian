@@ -55,7 +55,7 @@ public class RenderContext {
     }
     
     if self.stylizedTexture == nil {
-      self.stylizedTexture = makeTexture(bitmap: Bitmap(width: 720, height: 720, defaultPixel: RGBAPixel.opaqueBlack), device: device)
+      self.stylizedTexture = makeTexture(bitmap: bitmapWithDefault(width: 720, height: 720, defaultPixel: RGBAPixel.opaqueBlack), device: device)
     }
    
     //    print("render :D")

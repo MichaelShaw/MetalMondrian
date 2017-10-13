@@ -47,13 +47,13 @@ func pixelBuffer(forImage image:CGImage) -> CVPixelBuffer? {
   
 }
 
-func createPixelBuffer(forBitmap bitmap:inout Bitmap<RGBAPixel>) -> CVPixelBuffer? {
+func createPixelBuffer(forBitmap bitmap:inout Bitmap<BGRAPixel>) -> CVPixelBuffer? {
   var pixelBuffer:CVPixelBuffer? = nil
   bitmap.storage.withUnsafeMutableBytes { mt in
     let bp = mt.baseAddress!
     
-    let bytesPerRow = bitmap.width * RGBAPixel.bytes
-    let bytes = bitmap.pixels * RGBAPixel.bytes
+//    let bytesPerRow = bitmap.width * BGRAPixel.bytes
+    let bytes = bitmap.pixels * BGRAPixel.bytes
     let status = CVPixelBufferCreate(kCFAllocatorDefault, Int(bitmap.width), Int(bitmap.height), kCVPixelFormatType_32BGRA , nil, &pixelBuffer)
     
     if status == kCVReturnSuccess {
@@ -68,13 +68,13 @@ func createPixelBuffer(forBitmap bitmap:inout Bitmap<RGBAPixel>) -> CVPixelBuffe
   return pixelBuffer
 }
 
-func readBack(buffer:CVPixelBuffer, width: Int, height:Int) -> Bitmap<RGBAPixel>? {
-  var bitmap : Bitmap<RGBAPixel>? = nil
+func readBack(buffer:CVPixelBuffer, width: Int, height:Int) -> Bitmap<BGRAPixel>? {
+  var bitmap : Bitmap<BGRAPixel>? = nil
   let pixels = width * height
   CVPixelBufferLockBaseAddress(buffer, CVPixelBufferLockFlags(rawValue: 0))
   if let baseAddress = CVPixelBufferGetBaseAddress(buffer) {
-    let raw = baseAddress.bindMemory(to:RGBAPixel.self, capacity: width * height)
-    var bmp = Bitmap(width: width, height: height, defaultPixel: RGBAPixel.opaqueBlack)
+    let raw = baseAddress.bindMemory(to:BGRAPixel.self, capacity: width * height)
+    var bmp = bitmapWithDefault(width: width, height: height, defaultPixel: BGRAPixel.opaqueBlack)
     for i in 0..<pixels {
       bmp.storage[i] = raw[i]
     }

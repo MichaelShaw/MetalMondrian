@@ -13,7 +13,45 @@ public struct RGBAPixel {
   public var g: UInt8
   public var b: UInt8
   public var a: UInt8
+  
+  public var toBGRA : BGRAPixel {
+    get {
+      return BGRAPixel(b: b, g: g, r: r, a: a)
+    }
+  }
 }
+
+extension RGBAPixel : Equatable {
+  
+}
+
+public func ==(lhs:RGBAPixel, rhs:RGBAPixel) -> Bool {
+  return lhs.r == rhs.r && lhs.g == rhs.g && lhs.b == rhs.b && lhs.a == rhs.a
+}
+
+public struct BGRAPixel {
+  public var b: UInt8
+  public var g: UInt8
+  public var r: UInt8
+  public var a: UInt8
+  
+  public var toRGBA : RGBAPixel {
+    get {
+      return RGBAPixel(r: r, g: g, b: b, a: a)
+    }
+  }
+}
+
+extension BGRAPixel : Pixel {
+  public static var bytes : Int {
+    get {
+      return 4
+    }
+  }
+  
+  public static let opaqueBlack : BGRAPixel = BGRAPixel(b: 0, g: 0, r: 0, a: 255)
+}
+
 
 extension RGBAPixel : Pixel {
   public static let opaqueBlack : RGBAPixel = RGBAPixel(r: 0, g: 0, b: 0, a: 255)
@@ -107,15 +145,16 @@ public struct Bitmap<T> where T : Pixel {
   public mutating func set(p:Point, pixel: T) {
     storage[location(x: p.x, y: p.y)] = pixel
   }
-  
-  public init(width:Int, height:Int, defaultPixel: T)  {
-    self.width = width
-    self.height = height
+}
 
-    let sl = width * height * T.bytes
-    self.storageLength = sl
-    
-   
-    self.storage = Array(repeating: defaultPixel, count: sl)
-  }
+func map<A, B>(bmp:Bitmap<A>, f: (A) -> B) -> Bitmap<B> where B: Pixel {
+  let newStorage : [B] = bmp.storage.map(f)
+  let sl = bmp.width * bmp.height * B.bytes
+  return Bitmap.init(width: bmp.width, height: bmp.height, storage: newStorage, storageLength: sl)
+}
+
+func bitmapWithDefault<T>(width:Int, height:Int, defaultPixel: T) -> Bitmap<T> where T : Pixel {
+  let sl = width * height * T.bytes
+  let storage = Array(repeating: defaultPixel, count: sl)
+  return Bitmap(width: width, height: height, storage: storage, storageLength: sl)
 }

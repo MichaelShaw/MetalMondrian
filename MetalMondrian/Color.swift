@@ -51,9 +51,36 @@ public struct Color {
       return self.uiColor.cgColor
     }
   }
+  
+  var toRgb: RGBAPixel {
+    get {
+      return RGBAPixel(r: r, g: g, b: b, a: a)
+    }
+  }
 }
 
 public extension Color {
+  static let picoWhitish = Color.rgb(255, 241, 232)
+  
+  static let pico8 : [Color] = [
+    Color.rgb(0, 0, 0),
+    Color.rgb(29, 43, 83),
+    Color.rgb(126, 32, 83),
+    Color.rgb(0, 135, 81),
+    Color.rgb(171, 82, 54),
+    Color.rgb(95, 87, 79),
+    Color.rgb(194, 195, 199),
+    Color.rgb(255, 241, 232),
+    Color.rgb(255, 0, 77),
+    Color.rgb(255, 163, 0),
+    Color.rgb(255, 236, 39),
+    Color.rgb(0, 228, 54),
+    Color.rgb(41, 173, 255),
+    Color.rgb(131, 118, 156),
+    Color.rgb(255, 119, 168),
+    Color.rgb(255, 204, 170),
+  ]
+  
   static let clearWhite = Color.rgba(255, 255, 255, 0)
   static let clearBlack = Color.rgba(0, 0, 0, 0)
   static let white = Color.rgb(255, 255, 255)

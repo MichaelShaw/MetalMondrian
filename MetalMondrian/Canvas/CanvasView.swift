@@ -127,7 +127,8 @@ public class CanvasView : UIView {
         
         self.styleStatus = .running
         self.stylizeQueue.async {
-          if let pb = createPixelBuffer(forBitmap:&imgToStyle) {
+          var bgraImage : Bitmap<BGRAPixel> = map(bmp: imgToStyle) { p in p.toBGRA }
+          if let pb = createPixelBuffer(forBitmap:&bgraImage) {
             // check correct model loaded
             switch (currentVersion.style, self.styleModel) {
             case (.candy, .some(.candy(_))): ()
@@ -170,9 +171,10 @@ public class CanvasView : UIView {
             
             if let out = prediction {
               if let outBitmap = readBack(buffer:out, width: 720, height:720) {
+                let rgbaImage : Bitmap<RGBAPixel> = map(bmp: outBitmap) { p in p.toRGBA }
                 DispatchQueue.main.async {
                   print("main queue update version, bitmap, etc")
-                  self.lastStyle = (currentVersion, outBitmap)
+                  self.lastStyle = (currentVersion, rgbaImage)
                   self.styleStatus = .idle
                   // recheck
                   self.checkStylized()

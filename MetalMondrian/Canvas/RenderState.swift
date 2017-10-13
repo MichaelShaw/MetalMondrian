@@ -104,11 +104,7 @@ public class RenderState {
         print("no intersection")
       }
     }
-    
 
-    
-
-//
     self.drawingVersion += 1
   }
 }
