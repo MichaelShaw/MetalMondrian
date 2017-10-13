@@ -42,7 +42,9 @@ public class RenderContext {
     guard let geoData = self.geo else { return }
     
     if state.drawingDirty || self.drawTexture == nil {
+      print("texture uploaded")
       self.drawTexture = makeTexture(bitmap: state.drawing, device: device)
+      state.drawingDirty = false
     }
     
       //    print("render :D")

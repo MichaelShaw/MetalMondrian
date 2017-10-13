@@ -16,11 +16,8 @@ public struct RGBAPixel {
 }
 
 extension RGBAPixel : Pixel {
-  public static var empty : RGBAPixel {
-    get {
-      return RGBAPixel(r: 0, g: 0, b: 0, a: 255)
-    }
-  }
+  public static let opaqueBlack : RGBAPixel = RGBAPixel(r: 0, g: 0, b: 0, a: 255)
+  public static let opaqueWhite : RGBAPixel =  RGBAPixel(r: 255, g: 255, b: 255, a: 255)
   
   public static var bytes : Int {
     get {
@@ -31,8 +28,14 @@ extension RGBAPixel : Pixel {
 
 public protocol Pixel {
   static var bytes : Int { get }
-  static var empty : Self { get }
 }
+
+public struct Point {
+  public var x : Int
+  public var y : Int
+}
+
+
 
 public class Bitmap<T> where T : Pixel {
   let width:Int
@@ -56,13 +59,18 @@ public class Bitmap<T> where T : Pixel {
     storage[location(x: x, y: y)] = pixel
   }
   
-  public init(width:Int, height:Int)  {
+  public func set(p:Point, pixel: T) {
+    storage[location(x: p.x, y: p.y)] = pixel
+  }
+  
+  public init(width:Int, height:Int, defaultPixel: T)  {
     self.width = width
     self.height = height
 
     let sl = width * height * T.bytes
     self.storageLength = sl
+    
    
-    self.storage = Array(repeating: T.empty, count: sl)
+    self.storage = Array(repeating: defaultPixel, count: sl)
   }
 }

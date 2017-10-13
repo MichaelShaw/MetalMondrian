@@ -30,8 +30,6 @@ public class CombinedView : UIView {
 }
 
 class ViewController: UIViewController {
-  public let renderState = RenderState(drawing: Bitmap(width: 720, height: 720))
-
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -44,17 +42,17 @@ class ViewController: UIViewController {
       metalLayer.pixelFormat = .bgra8Unorm
       metalLayer.framebufferOnly = true
       
-      let bitmap : Bitmap<RGBAPixel> = Bitmap(width: 720, height: 720)
-      
-      for x in 0..<720 {
-        for y in 0..<720 {
-          let xr = UInt8(Double(x) / 720.0 * 255.0)
-          let yr = UInt8(Double(y) / 720.0 * 255.0)
-          
-          bitmap.set(x: x, y:y, pixel: RGBAPixel(r: xr, g:yr, b: 0, a: 255))
-        }
-      }
-      
+      let bitmap : Bitmap<RGBAPixel> = Bitmap(width: 720, height: 720, defaultPixel: RGBAPixel.opaqueWhite)
+//
+//      for x in 0..<720 {
+//        for y in 0..<720 {
+//          let xr = UInt8(Double(x) / 720.0 * 255.0)
+//          let yr = UInt8(Double(y) / 720.0 * 255.0)
+//
+//          bitmap.set(x: x, y:y, pixel: RGBAPixel(r: xr, g:yr, b: 0, a: 255))
+//        }
+//      }
+//
       let renderState = RenderState(drawing: bitmap)
       let renderContext = RenderContext(device: device)
       

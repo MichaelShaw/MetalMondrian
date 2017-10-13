@@ -35,26 +35,34 @@ public class CanvasView : UIView {
   required public init?(coder aDecoder: NSCoder) { return nil }
   
   override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    print("began -> \(touches)")
+    if let touch = touches.first {
+      self.drawAt(point: touch.location(in: self))
+    }
     super.touchesBegan(touches, with: event)
   }
   
   override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-    //    print("moved -> \(touches)")
+    if let touch = touches.first {
+      self.drawAt(point: touch.location(in: self))
+    }
     super.touchesMoved(touches, with: event)
   }
   
   override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    print("ended -> \(touches)")
+    if let touch = touches.first {
+      self.drawAt(point: touch.location(in: self))
+    }
     super.touchesEnded(touches, with: event)
   }
   
   override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-    print("cancelled -> \(touches)")
     super.touchesCancelled(touches, with: event)
   }
   
-
+  public func drawAt(point:CGPoint) {
+    self.renderState.drawAt(point: point)
+  }
+  
   @objc public func runLoop() {
     autoreleasepool {
       self.render()
@@ -62,12 +70,9 @@ public class CanvasView : UIView {
   }
   
   public func render() {
-//    guard let geoData = self.geo else { return }
     guard let drawable = metalLayer.nextDrawable() else { return }
     
     self.renderContext.render(drawable: drawable, state: self.renderState)
-    
-
   }
 }
 
