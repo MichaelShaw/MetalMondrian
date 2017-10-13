@@ -79,19 +79,36 @@ public class RenderState {
     return StylizeVersion(drawingVersion: drawingVersion, style: model)
   }
   
-  public func drawAt(point:CGPoint) {
-    let point = Point(x: Int(point.x), y: Int(point.y))
-    let brush = Rect.around(p: point, halfWidth: 3, halfHeight: 3)
-    if let intersection = drawing.rect.intersect(other: brush) {
-      for x in intersection.mn.x..<intersection.mx.x {
-        for y in intersection.mn.y..<intersection.mx.y {
-          drawing.set(x: x, y: y, pixel: color)
-        }
+  public func draw(from: Point?, to:Point) {
+    let useFrom = from ?? to
+    let distance = to.distanceTo(other: useFrom)
+    let steps = Int(distance / 3.0) + 1
+    
+    for i in 0..<steps {
+      let alpha : Double
+      if steps == 1 {
+        alpha = 1.0
+      } else {
+        alpha = Double(i) / Double(steps - 1)
       }
-    } else {
-      print("no intersection")
+      
+      let target = Point.lerp(a: useFrom, b: to, alpha: alpha)
+      let brush = Rect.around(p: target, halfWidth: 3, halfHeight: 3)
+      if let intersection = drawing.rect.intersect(other: brush) {
+        for x in intersection.mn.x..<intersection.mx.x {
+          for y in intersection.mn.y..<intersection.mx.y {
+            drawing.set(x: x, y: y, pixel: color)
+          }
+        }
+      } else {
+        print("no intersection")
+      }
     }
     
+
+    
+
+//
     self.drawingVersion += 1
   }
 }

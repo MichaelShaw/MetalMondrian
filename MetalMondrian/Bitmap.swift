@@ -33,6 +33,20 @@ public protocol Pixel {
 public struct Point {
   public var x : Int
   public var y : Int
+  
+  public func distanceTo(other:Point) -> Double {
+    let deltaX = abs(self.x - other.x)
+    let deltaY = abs(self.y - other.y)
+    
+    return sqrt(Double(deltaX * deltaX + deltaY * deltaY))
+  }
+  
+  public static func lerp(a: Point, b:Point, alpha: Double) -> Point {
+    let nAlpha = 1.0 - alpha
+    let x = Double(a.x) * nAlpha + Double(b.x) * alpha
+    let y = Double(a.y) * nAlpha + Double(b.y) * alpha
+    return Point(x: Int(x), y: Int(y))
+  }
 }
 
 public struct Rect {

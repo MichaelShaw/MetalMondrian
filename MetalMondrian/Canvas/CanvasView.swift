@@ -37,6 +37,8 @@ public class CanvasView : UIView {
   var renderState: RenderState
   var renderContext : RenderContext
   
+  var lastPoint: Point?
+  
   var displayLink: CADisplayLink?
   
   let metalLayer : CAMetalLayer
@@ -86,14 +88,18 @@ public class CanvasView : UIView {
       self.drawAt(point: touch.location(in: self))
     }
     super.touchesEnded(touches, with: event)
+    lastPoint = nil
   }
   
   override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     super.touchesCancelled(touches, with: event)
+    lastPoint = nil
   }
   
   public func drawAt(point:CGPoint) {
-    self.renderState.drawAt(point: point)
+    let point = Point(x: Int(point.x), y: Int(point.y))
+    self.renderState.draw(from: lastPoint, to: point)
+    self.lastPoint = point
     self.checkStylized()
   }
   
