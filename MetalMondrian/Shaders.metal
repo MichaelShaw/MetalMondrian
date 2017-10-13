@@ -23,6 +23,7 @@ struct VertexOut {
 
 struct Uniforms {
     float4x4 ndcMatrix;
+  
 };
 
 vertex VertexOut basic_vertex(
@@ -41,10 +42,12 @@ vertex VertexOut basic_vertex(
 }
 
 fragment float4 basic_fragment(VertexOut interpolated [[stage_in]],
-                              texture2d<float>  tex2D     [[ texture(0) ]],
+                              texture2d<float>  drawing     [[ texture(0) ]],
+                              texture2d<float>  stylized     [[ texture(1) ]],
                               sampler           sampler2D [[ sampler(0) ]]) {
-    float4 color = tex2D.sample(sampler2D, interpolated.texture_coords);
-    return color; // half4(interpolated.color[0], interpolated.color[1], interpolated.color[2], interpolated.color[3]);
+    float4 drawing_color = drawing.sample(sampler2D, interpolated.texture_coords);
+    float4 stylized_color = stylized.sample(sampler2D, interpolated.texture_coords);
+    return stylized_color; // half4(interpolated.color[0], interpolated.color[1], interpolated.color[2], interpolated.color[3]);
 }
 
 

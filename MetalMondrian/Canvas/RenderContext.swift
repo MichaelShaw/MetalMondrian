@@ -22,7 +22,9 @@ public class RenderContext {
   var geo: GeometryData<FatVertex>?
   
   var drawTexture: Texture?
+  var drawTextureVersion : Int = -1
   var stylizedTexture: Texture?
+  var stylizedTextureVersion: StylizeVersion = StylizeVersion(drawingVersion: -1, style: StyleModel.laMuse)
   
   public init(device:MTLDevice) {
     self.device = device
@@ -34,16 +36,23 @@ public class RenderContext {
     for v in fatSquare() {
       tesselator.push(v)
     }
+    
     self.geo = tesselator.createGeometry(device: device)
   }
   
-  public func render(drawable:CAMetalDrawable, state:RenderState) {
+  public func render(drawable:CAMetalDrawable, state:RenderState, style: inout (StylizeVersion, Bitmap<RGBAPixel>)?) {
     
     guard let geoData = self.geo else { return }
     
-    if state.drawingDirty || self.drawTexture == nil {
+    if state.drawingVersion != self.drawTextureVersion || self.drawTexture == nil {
       self.drawTexture = makeTexture(bitmap: state.drawing, device: device)
-      state.drawingDirty = false
+      self.drawTextureVersion = state.drawingVersion
+    }
+    
+    if let (styleVersion, styleBitmap) = style, styleVersion != self.stylizedTextureVersion {
+      print("style up")
+      self.stylizedTexture = makeTexture(bitmap: styleBitmap, device: device)
+      self.stylizedTextureVersion = styleVersion
     }
     
       //    print("render :D")
@@ -67,10 +76,15 @@ public class RenderContext {
       renderEncoder.setRenderPipelineState(pipeline)
       renderEncoder.setVertexBuffer(geoData.vertexBuffer, offset: 0, index: 0)
       renderEncoder.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
-  
+    
       renderEncoder.setFragmentSamplerState(self.sampler, index: 0)
     
       renderEncoder.setFragmentTexture(self.drawTexture!.texture, index: 0)
+    if let st = self.stylizedTexture {
+      renderEncoder.setFragmentTexture(st.texture, index: 1)
+//      renderEncoder.setFragment
+    }
+    
     
   
       renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: geoData.vertexCount, instanceCount: 1)

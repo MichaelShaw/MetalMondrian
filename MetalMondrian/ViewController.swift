@@ -30,6 +30,8 @@ public class CombinedView : UIView {
 }
 
 class ViewController: UIViewController {
+  let model = FNSMosaic()
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -43,20 +45,13 @@ class ViewController: UIViewController {
       metalLayer.framebufferOnly = true
       
       let bitmap : Bitmap<RGBAPixel> = Bitmap(width: 720, height: 720, defaultPixel: RGBAPixel.opaqueWhite)
-//
-//      for x in 0..<720 {
-//        for y in 0..<720 {
-//          let xr = UInt8(Double(x) / 720.0 * 255.0)
-//          let yr = UInt8(Double(y) / 720.0 * 255.0)
-//
-//          bitmap.set(x: x, y:y, pixel: RGBAPixel(r: xr, g:yr, b: 0, a: 255))
-//        }
-//      }
-//
+
       let renderState = RenderState(drawing: bitmap)
       let renderContext = RenderContext(device: device)
       
-      let canvas = CanvasView(frame: CGRect(x: 0, y: 0, width: 720, height: 720), renderState: renderState, renderContext: renderContext, metalLayer: metalLayer)
+      let stylizeQueue = DispatchQueue(label: "stylize", qos: .userInteractive, attributes: DispatchQueue.Attributes(rawValue: 0), autoreleaseFrequency: .workItem, target: nil)
+      
+      let canvas = CanvasView(frame: CGRect(x: 0, y: 0, width: 720, height: 720), renderState: renderState, renderContext: renderContext, metalLayer: metalLayer, stylizeQueue: stylizeQueue)
       
       self.view = CombinedView(frame: UIScreen.main.bounds, canvas: canvas)
       self.view.backgroundColor = Color.green.uiColor
@@ -70,6 +65,32 @@ class ViewController: UIViewController {
  
   override func viewDidLoad() {
     super.viewDidLoad()
+//    let image
+//    let imageView = UIImageView()
+//    imageView.frame = self.view.bounds
+//    print("giving image view bounds -> \(self.view.bounds)")
+    
+//    let bmp = #imageLiteral(resourceName: "mondrian_square.png")
+//    if let cgImage = bmp.cgImage {
+//      if let pb = pixelBuffer(forImage: cgImage) {
+//        let pred = try! model.prediction(inputImage: pb)
+////        let outBitmap = readBack(buffer:pred.outputImage, width: 720, height:720)
+//        print("we have an out bitmap!")
+//        if let outUIImage = uiImageFor(buffer: pred.outputImage) {
+//          print("assigning image :D")
+//          imageView.image = outUIImage
+//        } else {
+//          print("couldnt convert that cv")
+//        }
+//
+//      } else {
+//        print("no pb")
+//      }
+//    } else {
+//      print("no cgimage :-/")
+//    }
+//
+//    self.view.addSubview(imageView)
   }
 }
 

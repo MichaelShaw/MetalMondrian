@@ -9,7 +9,7 @@
 
 import UIKit
 
-public enum StyleModel {
+public enum StyleModel : String {
   case candy
   case feathers
   case laMuse
@@ -18,26 +18,29 @@ public enum StyleModel {
   case udnie
 }
 
+public enum StyleStatus {
+  case running
+  case idle
+}
+
 public class RenderState {
-  let drawing: Bitmap<RGBAPixel>
-  var drawingDirty : Bool = true
-  // last stylized version ... as a CVPixelBuffer? hrm
-  
-  // primary buffer
-  // last mondrian
-  // background req
-  // model type selected
+  var drawing: Bitmap<RGBAPixel>
+  var drawingVersion : Int = 0
+  var model : StyleModel = .mosaic
+  var color : RGBAPixel = RGBAPixel.opaqueBlack
   
   public init(drawing: Bitmap<RGBAPixel>) {
     self.drawing = drawing
-    self.drawingDirty = true
+  }
+  
+  public func stylizeVersion() -> StylizeVersion {
+    return StylizeVersion(drawingVersion: drawingVersion, style: model)
   }
   
   public func drawAt(point:CGPoint) {
     let point = Point(x: Int(point.x), y: Int(point.y))
-    let brush = Rect.around(p: point, halfWidth: 5, halfHeight: 5)
+    let brush = Rect.around(p: point, halfWidth: 3, halfHeight: 3)
     if let intersection = drawing.rect.intersect(other: brush) {
-      let color = RGBAPixel.opaqueBlack
       for x in intersection.mn.x..<intersection.mx.x {
         for y in intersection.mn.y..<intersection.mx.y {
           drawing.set(x: x, y: y, pixel: color)
@@ -47,7 +50,7 @@ public class RenderState {
       print("no intersection")
     }
     
-    self.drawingDirty = true
+    self.drawingVersion += 1
   }
 }
 

@@ -62,7 +62,7 @@ public struct Rect {
 }
 
 
-public class Bitmap<T> where T : Pixel {
+public struct Bitmap<T> where T : Pixel {
   let width:Int
   let height:Int
   
@@ -86,11 +86,11 @@ public class Bitmap<T> where T : Pixel {
     return width * y + x
   }
   
-  public func set(x:Int, y:Int, pixel: T) {
+  public mutating func set(x:Int, y:Int, pixel: T) {
     storage[location(x: x, y: y)] = pixel
   }
   
-  public func set(p:Point, pixel: T) {
+  public mutating func set(p:Point, pixel: T) {
     storage[location(x: p.x, y: p.y)] = pixel
   }
   
