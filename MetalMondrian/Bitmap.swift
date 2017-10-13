@@ -35,6 +35,31 @@ public struct Point {
   public var y : Int
 }
 
+public struct Rect {
+  public var mn: Point
+  public var mx: Point
+  
+  public var defunct : Bool {
+    get {
+      return self.mx.x < self.mn.x || self.mx.y < self.mn.y
+    }
+  }
+  
+  public static func around(p:Point, halfWidth:Int, halfHeight:Int) -> Rect {
+    return Rect(mn: Point(x: p.x - halfWidth, y: p.y - halfHeight),
+                mx: Point(x: p.x + halfWidth, y: p.y + halfHeight))
+  }
+  
+  public func intersect(other:Rect) -> Rect? {
+    let rect = Rect(mn: Point(x: max(self.mn.x, other.mn.x), y: max(self.mn.y, other.mn.y)),
+                    mx: Point(x: min(self.mx.x, other.mx.x), y: min(self.mx.y, other.mx.y)))
+    if rect.defunct {
+      return nil
+    } else {
+      return rect
+    }
+  }
+}
 
 
 public class Bitmap<T> where T : Pixel {
@@ -44,6 +69,12 @@ public class Bitmap<T> where T : Pixel {
   var storage: [T]
   
   let storageLength : Int
+  
+  public var rect : Rect {
+    get {
+      return Rect(mn: Point(x: 0, y: 0), mx: Point(x: width, y: height))
+    }
+  }
   
   public var pixels : Int {
     get {

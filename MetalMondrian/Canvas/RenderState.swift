@@ -34,12 +34,18 @@ public class RenderState {
   }
   
   public func drawAt(point:CGPoint) {
-    print("state draw")
-    
     let point = Point(x: Int(point.x), y: Int(point.y))
-    
-    drawing.set(p: point, pixel: RGBAPixel.opaqueBlack)
-    
+    let brush = Rect.around(p: point, halfWidth: 5, halfHeight: 5)
+    if let intersection = drawing.rect.intersect(other: brush) {
+      let color = RGBAPixel.opaqueBlack
+      for x in intersection.mn.x..<intersection.mx.x {
+        for y in intersection.mn.y..<intersection.mx.y {
+          drawing.set(x: x, y: y, pixel: color)
+        }
+      }
+    } else {
+      print("no intersection")
+    }
     
     self.drawingDirty = true
   }
