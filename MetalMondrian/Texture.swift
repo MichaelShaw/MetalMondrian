@@ -15,7 +15,18 @@ public struct Texture {
     let descriptor: MTLTextureDescriptor
 }
 
-func uploadImage(image:CGImage, toTexture texture:MTLTexture) {
+func upload(bitmap:Bitmap<RGBAPixel>, toTexture texture:MTLTexture) {
+  let region = MTLRegionMake2D(0, 0, bitmap.width, bitmap.height)
+  
+  let rowBytes = bitmap.width * RGBAPixel.bytes
+  
+  bitmap.storage.withUnsafeBytes { (u8Ptr: UnsafeRawBufferPointer) in
+    let ptr = u8Ptr.baseAddress!
+    texture.replace(region: region, mipmapLevel: 0, withBytes: ptr, bytesPerRow: Int(rowBytes))
+  }
+}
+
+func upload(image:CGImage, toTexture texture:MTLTexture) {
     let colorSpace = CGColorSpaceCreateDeviceRGB()
     let width = image.width
     let height = image.height
@@ -28,31 +39,23 @@ func uploadImage(image:CGImage, toTexture texture:MTLTexture) {
     let bounds = CGRect(x: 0, y: 0, width: Int(width), height: Int(height))
     context.clear(bounds)
     context.draw(image, in: bounds)
-
-    let bitmap : Bitmap<RGBAPixel> = Bitmap(width: 720, height: 720)
-  
-    for x in 0..<720 {
-      for y in 0..<720 {
-        let pixel = RGBAPixel(r: UInt8(x % 255), g: UInt8(y % 128), b: 0, a: 255)
-        bitmap.set(x: x, y: y, pixel: pixel)
-        
-      }
-    }
- 
-    /*
- if flip == false {
- context.translateBy(x: 0, y: CGFloat(self.height))
- context.scaleBy(x: 1.0, y: -1.0)
- }*/
   
     let region = MTLRegionMake2D(0, 0, width, height)
   
-    bitmap.storage.withUnsafeBytes { (u8Ptr: UnsafeRawBufferPointer) in
-      let ptr = u8Ptr.baseAddress!
-      
-      texture.replace(region: region, mipmapLevel: 0, withBytes: ptr, bytesPerRow: Int(rowBytes))
-    }
-//  texture.replace(region: region, mipmapLevel: 0, withBytes: context.data!, bytesPerRow: Int(rowBytes))
+    texture.replace(region: region, mipmapLevel: 0, withBytes: context.data!, bytesPerRow: Int(rowBytes))
+}
+
+func makeTexture(bitmap:Bitmap<RGBAPixel>, device:MTLDevice) -> Texture {
+  let width = bitmap.width
+  let height = bitmap.height
+  
+  let texDescriptor = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: MTLPixelFormat.rgba8Unorm, width: width, height: height, mipmapped: false)
+  
+  let tex = device.makeTexture(descriptor: texDescriptor)!
+  
+  upload(bitmap: bitmap, toTexture: tex)
+  
+  return Texture(texture: tex, descriptor: texDescriptor)
 }
 
 func makeTexture(image: CGImage, device:MTLDevice) -> Texture {
@@ -63,9 +66,9 @@ func makeTexture(image: CGImage, device:MTLDevice) -> Texture {
     
     let tex = device.makeTexture(descriptor: texDescriptor)!
     
-    uploadImage(image: image, toTexture: tex)
+    upload(image: image, toTexture: tex)
     
-    return Texture.init(texture: tex, descriptor: texDescriptor)
+    return Texture(texture: tex, descriptor: texDescriptor)
 }
 
 func defaultSampler(device: MTLDevice) -> MTLSamplerState? {

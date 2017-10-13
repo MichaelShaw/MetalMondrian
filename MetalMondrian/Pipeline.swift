@@ -22,6 +22,18 @@ let fatTriangle : [FatVertex] = [
     FatVertex(x: 1.0, y: -1.0, z: 0.0, u:1.0, v: 1.0, r: 0.0, g: 0.0, b: 1.0, a: 1.0)
 ]
 
+
+func fatSquare() -> [FatVertex] {
+  let tl = FatVertex(x: -1.0, y: 1.0, z: 0.0, u: 0.0, v: 0.0, r: 1.0, g: 1.0, b: 1.0, a: 1.0)
+  let tr = FatVertex(x: 1.0,  y: 1.0, z: 0.0, u: 1.0, v: 0.0, r: 1.0, g: 1.0, b: 1.0, a: 1.0)
+
+  let bl = FatVertex(x: -1.0, y: -1.0, z: 0.0, u: 0.0, v: 1.0, r: 1.0, g: 1.0, b: 1.0, a: 1.0)
+  let br = FatVertex(x: 1.0,  y: -1.0, z: 0.0, u: 1.0, v: 1.0, r: 1.0, g: 1.0, b: 1.0, a: 1.0)
+
+  return [tl, bl, tr, tr, bl, br]
+}
+
+
 struct ColoredVertex {
     var x,y,z: Float     // position data
     var r,g,b,a: Float   // color data

@@ -10,16 +10,14 @@ import UIKit
 import Metal
 import MetalKit
 
-class CanvasView : UIView {
+public class CanvasView : UIView {
   var renderState: RenderState
   var renderContext : RenderContext
   
   var displayLink: CADisplayLink?
   
   let metalLayer : CAMetalLayer
-  
-  var texture: Texture?
-  
+
   public init(frame:CGRect, renderState: RenderState, renderContext:RenderContext, metalLayer:CAMetalLayer) {
     self.renderState = renderState
     self.renderContext = renderContext
@@ -36,31 +34,27 @@ class CanvasView : UIView {
   
   required public init?(coder aDecoder: NSCoder) { return nil }
   
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+  override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     print("began -> \(touches)")
     super.touchesBegan(touches, with: event)
   }
   
-  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+  override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
     //    print("moved -> \(touches)")
     super.touchesMoved(touches, with: event)
   }
   
-  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+  override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     print("ended -> \(touches)")
     super.touchesEnded(touches, with: event)
   }
   
-  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+  override public func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
     print("cancelled -> \(touches)")
     super.touchesCancelled(touches, with: event)
   }
   
-  public override func layoutSubviews() {
-    super.layoutSubviews()
-    print("layout subviews within my bounds \(self.bounds)")
-  }
-  
+
   @objc public func runLoop() {
     autoreleasepool {
       self.render()
@@ -71,7 +65,7 @@ class CanvasView : UIView {
 //    guard let geoData = self.geo else { return }
     guard let drawable = metalLayer.nextDrawable() else { return }
     
-    self.renderContext.render(drawable: drawable)
+    self.renderContext.render(drawable: drawable, state: self.renderState)
     
 
   }

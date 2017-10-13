@@ -9,8 +9,9 @@
 import Foundation
 
 
-class RenderState {
+public class RenderState {
   let drawing: Bitmap<RGBAPixel>
+  var drawingDirty : Bool = true
   // primary buffer
   // last mondrian
   // background req
@@ -18,6 +19,7 @@ class RenderState {
   
   public init(drawing: Bitmap<RGBAPixel>) {
     self.drawing = drawing
+    self.drawingDirty = true
   }
 }
 
