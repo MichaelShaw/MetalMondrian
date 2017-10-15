@@ -123,7 +123,7 @@ public class CanvasView : UIView {
       
       if run {
         print("run styleize :D")
-        var imgToStyle = self.renderState.drawing
+        let imgToStyle = self.renderState.drawing
         
         self.styleStatus = .running
         self.stylizeQueue.async {
