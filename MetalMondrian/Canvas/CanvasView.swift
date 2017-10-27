@@ -34,7 +34,7 @@ enum LoadedModel {
 }
 
 public class CanvasView : UIView {
-  var renderState: RenderState
+  var canvasState: CanvasState
   var renderContext : RenderContext
   
   var lastPoint: Point?
@@ -48,8 +48,8 @@ public class CanvasView : UIView {
   var styleStatus : StyleStatus = .idle
   var lastStyle: (StylizeVersion, Bitmap<RGBAPixel>)? = nil
   
-  public init(frame:CGRect, renderState: RenderState, renderContext:RenderContext, metalLayer:CAMetalLayer, stylizeQueue: DispatchQueue) {
-    self.renderState = renderState
+  public init(frame:CGRect, canvasState: CanvasState, renderContext:RenderContext, metalLayer:CAMetalLayer, stylizeQueue: DispatchQueue) {
+    self.canvasState = canvasState
     self.renderContext = renderContext
     self.metalLayer = metalLayer
     
@@ -98,7 +98,7 @@ public class CanvasView : UIView {
   
   public func drawAt(point:CGPoint) {
     let point = Point(x: Int(point.x), y: Int(point.y))
-    self.renderState.draw(from: lastPoint, to: point)
+    self.canvasState.draw(from: lastPoint, to: point)
     self.lastPoint = point
     self.checkStylized()
   }
@@ -110,7 +110,7 @@ public class CanvasView : UIView {
   }
   
   func checkStylized() {
-    let currentVersion = self.renderState.stylizeVersion()
+    let currentVersion = self.canvasState.stylizeVersion()
     
     switch styleStatus {
     case .idle:
@@ -123,7 +123,7 @@ public class CanvasView : UIView {
       
       if run {
         print("run styleize :D")
-        let imgToStyle = self.renderState.drawing
+        let imgToStyle = self.canvasState.drawing
         
         self.styleStatus = .running
         self.stylizeQueue.async {
@@ -197,7 +197,7 @@ public class CanvasView : UIView {
   public func render() {
     guard let drawable = metalLayer.nextDrawable() else { return }
     
-    self.renderContext.render(drawable: drawable, state: self.renderState, style: &self.lastStyle)
+    self.renderContext.render(drawable: drawable, state: self.canvasState, style: &self.lastStyle)
   }
 }
 

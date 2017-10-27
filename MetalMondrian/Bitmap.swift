@@ -150,7 +150,7 @@ public struct Bitmap<T> where T : Pixel {
 func map<A, B>(bmp:Bitmap<A>, f: (A) -> B) -> Bitmap<B> where B: Pixel {
   let newStorage : [B] = bmp.storage.map(f)
   let sl = bmp.width * bmp.height * B.bytes
-  return Bitmap.init(width: bmp.width, height: bmp.height, storage: newStorage, storageLength: sl)
+  return Bitmap(width: bmp.width, height: bmp.height, storage: newStorage, storageLength: sl)
 }
 
 func bitmapWithDefault<T>(width:Int, height:Int, defaultPixel: T) -> Bitmap<T> where T : Pixel {

@@ -76,29 +76,29 @@ public class CombinedView : UIView {
   }
   
   public func update(color:Color) {
-    self.canvas.renderState.color = color.toRgb
+    self.canvas.canvasState.color = color.toRgb
     self.updateSelected()
   }
   
   public func update(styleModel:StyleModel) {
-    self.canvas.renderState.model = styleModel
+    self.canvas.canvasState.model = styleModel
     self.canvas.checkStylized()
     self.updateSelected()
   }
   
   public func toggleBlend() {
-    self.canvas.renderState.blendMode = self.canvas.renderState.blendMode.next
+    self.canvas.canvasState.blendMode = self.canvas.canvasState.blendMode.next
     self.updateBlendButtonText()
     self.updateSelected()
   }
   
   public func updateBlendButtonText() {
-    button.setTitle(self.canvas.renderState.blendMode.description, for: UIControlState.normal)
+    button.setTitle(self.canvas.canvasState.blendMode.description, for: UIControlState.normal)
   }
   
   public func updateSelected() {
     for (button, style) in modelButtons {
-      if style == self.canvas.renderState.model {
+      if style == self.canvas.canvasState.model {
         button.layer.borderColor = Color.white.cgColor
         button.layer.borderWidth = 8.0
       } else {
@@ -108,7 +108,7 @@ public class CombinedView : UIView {
     }
     
     for (button, color) in colorButtons {
-      if color.toRgb == self.canvas.renderState.color {
+      if color.toRgb == self.canvas.canvasState.color {
         button.layer.borderColor = Color.white.cgColor
         button.layer.borderWidth = 8.0
       } else {
@@ -143,13 +143,13 @@ public class CombinedView : UIView {
     
     button.frame = blending.with(height: swatchSize * 2.0 + colorPadding)
     
-    let styles = controls.insetBy(dx: stylePadding, dy: 0.0)
+    let stylesRect = controls.insetBy(dx: stylePadding, dy: 0.0)
     
     for (i, (styleButton, _)) in self.modelButtons.enumerated() {
       let w : CGFloat = 256
       let h : CGFloat = 205.0
       
-      styleButton.frame = styles.with(width: w, height: h).offsetBy(dx: CGFloat(i % 2) * (w + stylePadding), dy: CGFloat(i / 2) * (h + stylePadding) )
+      styleButton.frame = stylesRect.with(width: w, height: h).offsetBy(dx: CGFloat(i % 2) * (w + stylePadding), dy: CGFloat(i / 2) * (h + stylePadding) )
     }
   }
 }
@@ -171,12 +171,12 @@ class ViewController: UIViewController {
       
       let bitmap : Bitmap<RGBAPixel> = bitmapWithDefault(width: 720, height: 720, defaultPixel: Color.picoWhitish.toRgb)
 
-      let renderState = RenderState(drawing: bitmap)
+      let canvasState = CanvasState(drawing: bitmap)
       let renderContext = RenderContext(device: device)
       
       let stylizeQueue = DispatchQueue(label: "stylize", qos: .userInteractive, attributes: DispatchQueue.Attributes(rawValue: 0), autoreleaseFrequency: .workItem, target: nil)
       
-      let canvas = CanvasView(frame: CGRect(x: 0, y: 0, width: 720, height: 720), renderState: renderState, renderContext: renderContext, metalLayer: metalLayer, stylizeQueue: stylizeQueue)
+      let canvas = CanvasView(frame: CGRect(x: 0, y: 0, width: 720, height: 720), canvasState: canvasState, renderContext: renderContext, metalLayer: metalLayer, stylizeQueue: stylizeQueue)
       
       self.view = CombinedView(frame: UIScreen.main.bounds, canvas: canvas)
     } else {

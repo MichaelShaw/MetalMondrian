@@ -40,7 +40,7 @@ public class RenderContext {
     self.geo = tesselator.createGeometry(device: device)
   }
   
-  public func render(drawable:CAMetalDrawable, state:RenderState, style: inout (StylizeVersion, Bitmap<RGBAPixel>)?) {
+  public func render(drawable:CAMetalDrawable, state:CanvasState, style: inout (StylizeVersion, Bitmap<RGBAPixel>)?) {
     guard let geoData = self.geo else { return }
     
     if state.drawingVersion != self.drawTextureVersion || self.drawTexture == nil {

@@ -64,7 +64,7 @@ public enum BlendMode : Int {
   }
 }
 
-public class RenderState {
+public class CanvasState {
   var drawing: Bitmap<RGBAPixel>
   var drawingVersion : Int = 0
   var model : StyleModel = .mosaic

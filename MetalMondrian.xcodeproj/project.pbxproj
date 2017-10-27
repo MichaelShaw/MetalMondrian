@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		4C0B59CE1F9052D00030A0C7 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59CD1F9052D00030A0C7 /* CanvasView.swift */; };
 		4C0B59D01F9052DC0030A0C7 /* RenderContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59CF1F9052DC0030A0C7 /* RenderContext.swift */; };
-		4C0B59D21F9052F20030A0C7 /* RenderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59D11F9052F20030A0C7 /* RenderState.swift */; };
+		4C0B59D21F9052F20030A0C7 /* CanvasState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59D11F9052F20030A0C7 /* CanvasState.swift */; };
 		4C0B59D41F9056DD0030A0C7 /* Bitmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59D31F9056DD0030A0C7 /* Bitmap.swift */; };
 		4C0B59E21F9061910030A0C7 /* CGRectExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59E11F9061910030A0C7 /* CGRectExtensions.swift */; };
 		4C1EC3A51F906E4500082AEA /* FNSFeathers.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4C0B59D91F905FC30030A0C7 /* FNSFeathers.mlmodel */; };
@@ -46,7 +46,7 @@
 /* Begin PBXFileReference section */
 		4C0B59CD1F9052D00030A0C7 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		4C0B59CF1F9052DC0030A0C7 /* RenderContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderContext.swift; sourceTree = "<group>"; };
-		4C0B59D11F9052F20030A0C7 /* RenderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderState.swift; sourceTree = "<group>"; };
+		4C0B59D11F9052F20030A0C7 /* CanvasState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasState.swift; sourceTree = "<group>"; };
 		4C0B59D31F9056DD0030A0C7 /* Bitmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bitmap.swift; sourceTree = "<group>"; };
 		4C0B59D51F905FC30030A0C7 /* FNSLaMuse.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FNSLaMuse.mlmodel; sourceTree = "<group>"; };
 		4C0B59D61F905FC30030A0C7 /* FNSTheScream.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FNSTheScream.mlmodel; sourceTree = "<group>"; };
@@ -101,7 +101,7 @@
 			children = (
 				4C0B59CD1F9052D00030A0C7 /* CanvasView.swift */,
 				4C0B59CF1F9052DC0030A0C7 /* RenderContext.swift */,
-				4C0B59D11F9052F20030A0C7 /* RenderState.swift */,
+				4C0B59D11F9052F20030A0C7 /* CanvasState.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -251,7 +251,7 @@
 			files = (
 				4C1EC3AE1F90889600082AEA /* BasicButton.swift in Sources */,
 				4C1EC3A51F906E4500082AEA /* FNSFeathers.mlmodel in Sources */,
-				4C0B59D21F9052F20030A0C7 /* RenderState.swift in Sources */,
+				4C0B59D21F9052F20030A0C7 /* CanvasState.swift in Sources */,
 				4C1EC3A81F906E5000082AEA /* FNSMosaic.mlmodel in Sources */,
 				4C1EC3AC1F9073BE00082AEA /* Stylizer.swift in Sources */,
 				4CC90B111F8750AD00E2DBDD /* Matrix.swift in Sources */,
