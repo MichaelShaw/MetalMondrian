@@ -108,6 +108,45 @@ public class CanvasView : UIView {
       self.render()
     }
   }
+	
+	func ensureLoaded(style:StyleModel) {
+		switch (style, self.styleModel) {
+		case (.candy, .some(.candy(_))): ()
+		case (.feathers, .some(.feathers(_))): ()
+		case (.laMuse, .some(.laMuse(_))): ()
+		case (.mosaic, .some(.mosaic(_))): ()
+		case (.theScream, .some(.theScream(_))):()
+		case (.udnie, .some(.udnie(_))): ()
+		default:
+			let m : LoadedModel
+			switch style {
+			case .candy: m = .candy(FNSCandy())
+			case .feathers: m = .feathers(FNSFeathers())
+			case .laMuse: m = .laMuse(FNSLaMuse())
+			case .mosaic: m = .mosaic(FNSMosaic())
+			case .theScream: m = .theScream(FNSTheScream())
+			case .udnie: m = .udnie(FNSUdnie())
+			}
+			self.styleModel = m
+		}
+	}
+	
+	func predict(pixelBuffer:CVPixelBuffer, model:LoadedModel) -> CVPixelBuffer {
+		switch model {
+		case .candy(let cr):
+			return (try! cr.prediction(inputImage: pixelBuffer)).outputImage
+		case .feathers(let model):
+			return (try! model.prediction(inputImage: pixelBuffer)).outputImage
+		case .laMuse(let model):
+			return (try! model.prediction(inputImage: pixelBuffer)).outputImage
+		case .mosaic(let model):
+			return (try! model.prediction(inputImage: pixelBuffer)).outputImage
+		case .theScream(let model):
+			return (try! model.prediction(inputImage: pixelBuffer)).outputImage
+		case .udnie(let model):
+			return (try! model.prediction(inputImage: pixelBuffer)).outputImage
+		}
+	}
   
   func checkStylized() {
     let currentVersion = self.canvasState.stylizeVersion()
@@ -120,55 +159,23 @@ public class CanvasView : UIView {
       } else {
         run = true
       }
-      
+	
       if run {
         print("run styleize :D")
         let imgToStyle = self.canvasState.drawing
-        
+
         self.styleStatus = .running
         self.stylizeQueue.async {
           var bgraImage : Bitmap<BGRAPixel> = map(bmp: imgToStyle) { p in p.toBGRA }
           if let pb = createPixelBuffer(forBitmap:&bgraImage) {
-            // check correct model loaded
-            switch (currentVersion.style, self.styleModel) {
-            case (.candy, .some(.candy(_))): ()
-            case (.feathers, .some(.feathers(_))): ()
-            case (.laMuse, .some(.laMuse(_))): ()
-            case (.mosaic, .some(.mosaic(_))): ()
-            case (.theScream, .some(.theScream(_))):()
-            case (.udnie, .some(.udnie(_))): ()
-            default:
-              switch currentVersion.style {
-              case .candy: self.styleModel = .some(.candy(FNSCandy()))
-              case .feathers: self.styleModel = .some(.feathers(FNSFeathers()))
-              case .laMuse: self.styleModel = .some(.laMuse(FNSLaMuse()))
-              case .mosaic: self.styleModel = .some(.mosaic(FNSMosaic()))
-              case .theScream: self.styleModel = .some(.theScream(FNSTheScream()))
-              case .udnie: self.styleModel = .some(.udnie(FNSUdnie()))
-              }
-            }
-            
-            
-            let prediction : CVPixelBuffer?
-            if let m = self.styleModel {
-              switch m {
-              case .candy(let model):
-                prediction = try! model.prediction(inputImage: pb).outputImage
-              case .feathers(let model):
-                prediction = try! model.prediction(inputImage: pb).outputImage
-              case .laMuse(let model):
-                prediction = try! model.prediction(inputImage: pb).outputImage
-              case .mosaic(let model):
-                prediction = try! model.prediction(inputImage: pb).outputImage
-              case .theScream(let model):
-                prediction = try! model.prediction(inputImage: pb).outputImage
-              case .udnie(let model):
-                prediction = try! model.prediction(inputImage: pb).outputImage
-              }
-            } else {
-              prediction = nil
-            }
-            
+			self.ensureLoaded(style: currentVersion.style)
+			let prediction : CVPixelBuffer?
+			if let m = self.styleModel {
+				prediction = self.predict(pixelBuffer: pb, model: m)
+			} else {
+				prediction = nil
+			}
+			
             if let out = prediction {
               if let outBitmap = readBack(buffer:out, width: 720, height:720) {
                 let rgbaImage : Bitmap<RGBAPixel> = map(bmp: outBitmap) { p in p.toRGBA }

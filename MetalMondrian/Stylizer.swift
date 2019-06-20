@@ -49,7 +49,8 @@ func pixelBuffer(forImage image:CGImage) -> CVPixelBuffer? {
 
 func createPixelBuffer(forBitmap bitmap:inout Bitmap<BGRAPixel>) -> CVPixelBuffer? {
   var pixelBuffer:CVPixelBuffer? = nil
-  bitmap.storage.withUnsafeMutableBytes { mt in
+  var crap = bitmap.storage
+  crap.withUnsafeMutableBytes { mt in
     let bp = mt.baseAddress!
     
 //    let bytesPerRow = bitmap.width * BGRAPixel.bytes
